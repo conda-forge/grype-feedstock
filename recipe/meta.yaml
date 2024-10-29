@@ -1,5 +1,5 @@
 {% set name = "grype" %}
-{% set version = "0.82.2" %}
+{% set version = "0.83.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/anchore/grype/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: efbd5e5c5c0b97f71ffaf5a638c9aaec14739478a38a79d0ed469a7e6c5689fc
+    sha256: c6d650b4442d34cdc4be05130372843d197e5a5b83a112fc58f01cb08c3d4757
   - url: https://gitlab.com/cznic/mathutil/-/raw/b13e5b5643328f15fd2fcedc85f647f0d8f9180f/LICENSE  # v1.5.0
     sha256: bfa9bf72a72ca009fd62a8f84fca3dca67e51d93af96352723646599898b6cf5
     fn: LICENSE-mathutil
