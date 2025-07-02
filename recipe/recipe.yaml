@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: grype
-  version: "0.94.0"
+  version: "0.95.0"
 
 package:
   name: ${{ name|lower }}
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/anchore/grype/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: d285dc8990f4ab5f8620858fbf4831520526cd8c705ebdf9c9c2cac63745d380
+    sha256: 25869b1df827141d7c1e7eaac2ea8e817bf4a6397eabb620d59855d81a3e90a2
   - url: https://gitlab.com/cznic/mathutil/-/raw/b13e5b5643328f15fd2fcedc85f647f0d8f9180f/LICENSE  # v1.5.0
     sha256: bfa9bf72a72ca009fd62a8f84fca3dca67e51d93af96352723646599898b6cf5
     file_name: LICENSE-mathutil
