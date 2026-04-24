@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: grype
-  version: "0.111.0"
+  version: "0.111.1"
 
 package:
   name: ${{ name|lower }}
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/anchore/grype/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 01d60c3e785f635da8f060712df2a901025386b740eb173e365ae0c263e66792
+    sha256: f7d8ff24a729c489cb1356ef539251945679a73c9de704dd6871a2455229c44d
   - url: https://gitlab.com/cznic/mathutil/-/raw/b13e5b5643328f15fd2fcedc85f647f0d8f9180f/LICENSE  # v1.5.0
     sha256: bfa9bf72a72ca009fd62a8f84fca3dca67e51d93af96352723646599898b6cf5
     file_name: LICENSE-mathutil
@@ -20,6 +20,9 @@ source:
   - url: https://raw.githubusercontent.com/deitch/magic/2def47b612f6f806d1e136bbec1c34fdefacf04a/LICENSE
     sha256: 2423c6eb9948e617a61f7a2d1cb463c69d60e599fbae5931551631d2a8730838
     file_name: LICENSE-magic
+  - url: https://raw.githubusercontent.com/in-toto/attestation/refs/tags/v1.2.0/LICENSE
+    sha256: b3a6ac899861c2c28a1abd5c7ea8733fefaed6938d730e099c42671386032aeb
+    file_name: LICENSE-attestation
 
 build:
   number: 0
@@ -42,9 +45,11 @@ about:
     - library_licenses/
     - LICENSE-xz
     - LICENSE-mathutil
+    - LICENSE-attestation
   summary: A vulnerability scanner for container images and filesystems
   homepage: https://github.com/anchore/grype
 
 extra:
   recipe-maintainers:
     - janjagusch
+    - fhoehle
