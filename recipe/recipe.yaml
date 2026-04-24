@@ -20,6 +20,9 @@ source:
   - url: https://raw.githubusercontent.com/deitch/magic/2def47b612f6f806d1e136bbec1c34fdefacf04a/LICENSE
     sha256: 2423c6eb9948e617a61f7a2d1cb463c69d60e599fbae5931551631d2a8730838
     file_name: LICENSE-magic
+  - url: https://raw.githubusercontent.com/in-toto/attestation/refs/tags/v1.2.0/LICENSE
+    sha256: b3a6ac899861c2c28a1abd5c7ea8733fefaed6938d730e099c42671386032aeb
+    file_name: LICENSE-attestation
 
 build:
   number: 0
@@ -42,9 +45,11 @@ about:
     - library_licenses/
     - LICENSE-xz
     - LICENSE-mathutil
+    - LICENSE-attestation
   summary: A vulnerability scanner for container images and filesystems
   homepage: https://github.com/anchore/grype
 
 extra:
   recipe-maintainers:
     - janjagusch
+    - fhoehle
