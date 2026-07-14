@@ -1,11 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
 schema_version: 1
 
 context:
-  name: grype
   version: "0.115.0"
+  license_ignore: |-
+    modernc.org/mathutil
+    github.com/xi2/xz
+    github.com/deitch/magic
+    github.com/in-toto/attestation
 
 package:
-  name: ${{ name|lower }}
+  name: grype
   version: ${{ version }}
 
 source:
@@ -26,17 +31,19 @@ source:
 
 build:
   number: 0
-  skip: win
+  script:
+    - go-licenses save . --save_path library_licenses {% for i in license_ignore | split | %} --ignore ${{ i }}{% endfor %}
+    - cd cmd/grype
+    - go build -v -o "${{ PREFIX }}/bin/grype${{ ".exe" if win }}" -ldflags="-X 'main.version=${PKG_VERSION}'"
 
 requirements:
   build:
     - ${{ compiler('go-nocgo') }}
-    - ${{ stdlib('c') }}
     - go-licenses
 
 tests:
   - script:
-      - grype --version | grep "${{ version }}" | grep -v grep
+      - grype --version | ${{ "grep" if unix else "findstr" }} "${{ version }}"
 
 about:
   license: Apache-2.0
