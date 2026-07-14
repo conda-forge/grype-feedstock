@@ -3,7 +3,11 @@ schema_version: 1
 
 context:
   version: "0.115.0"
-  license_ignore: |-
+  go_mod: github.com/anchore/grype
+  go_cmd: ./cmd/grype
+  go_bin: ${{ "$PREFIX/bin/grype" if unix else "%LIBRARY_BIN%\\grype.exe" }}
+  go_build: go build -v -buildmode=pie -trimpath -modcacherw -ldflags="-X 'main.version=${{ version }}'"
+  license_ignore:
     modernc.org/mathutil
     github.com/xi2/xz
     github.com/deitch/magic
@@ -16,25 +20,27 @@ package:
 source:
   - url: https://github.com/anchore/grype/archive/refs/tags/v${{ version }}.tar.gz
     sha256: 146d944636f0d6ebfe21a1287306ef742a2d495e5cf629c1bbd47b7515164165
+    target_directory: ${{ go_mod }}
   - url: https://gitlab.com/cznic/mathutil/-/raw/b13e5b5643328f15fd2fcedc85f647f0d8f9180f/LICENSE  # v1.5.0
     sha256: bfa9bf72a72ca009fd62a8f84fca3dca67e51d93af96352723646599898b6cf5
-    file_name: LICENSE-mathutil
+    file_name: library_licenses_manual/mathutil
   - url: https://raw.githubusercontent.com/xi2/xz/48954b6210f8d154cb5f8484d3a3e1f83489309e/LICENSE
     sha256: 5c640056d513f276d56635af7a0bed81cb7eac02a31b6e56d40c416557a8d8ce
-    file_name: LICENSE-xz
+    file_name: library_licenses_manual/xz
   - url: https://raw.githubusercontent.com/deitch/magic/2def47b612f6f806d1e136bbec1c34fdefacf04a/LICENSE
     sha256: 2423c6eb9948e617a61f7a2d1cb463c69d60e599fbae5931551631d2a8730838
-    file_name: LICENSE-magic
+    file_name: library_licenses_manual/magic
   - url: https://raw.githubusercontent.com/in-toto/attestation/refs/tags/v1.2.0/LICENSE
     sha256: b3a6ac899861c2c28a1abd5c7ea8733fefaed6938d730e099c42671386032aeb
-    file_name: LICENSE-attestation
+    file_name: library_licenses_manual/attestation
 
 build:
-  number: 0
+  number: 1
   script:
-    - go-licenses save . --save_path library_licenses {% for i in license_ignore | split | %} --ignore ${{ i }}{% endfor %}
-    - cd cmd/grype
-    - go build -v -o "${{ PREFIX }}/bin/grype${{ ".exe" if win }}" -ldflags="-X 'main.version=${PKG_VERSION}'"
+    - ${{ "export" if unix else "set" }} "GOPATH=${{ SRC_DIR }}"
+    - cd ${{ go_mod }}
+    - ${{ go_build }} -o "${{ go_bin }}" ${{ go_cmd }}
+    - go-licenses save ${{ go_cmd }} --save_path "${{ SRC_DIR }}/library_licenses" {% for i in license_ignore | split %}--ignore ${{ i }} {% endfor %}
 
 requirements:
   build:
@@ -50,9 +56,7 @@ about:
   license_file:
     - LICENSE
     - library_licenses/
-    - LICENSE-xz
-    - LICENSE-mathutil
-    - LICENSE-attestation
+    - library_licenses_manual/
   summary: A vulnerability scanner for container images and filesystems
   homepage: https://github.com/anchore/grype
 
