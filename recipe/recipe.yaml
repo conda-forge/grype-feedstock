@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.116.1"
+  version: "0.117.0"
   go_mod: github.com/anchore/grype
   go_cmd: ./cmd/grype
   go_bin: ${{ "$PREFIX/bin/grype" if unix else "%LIBRARY_BIN%\\grype.exe" }}
@@ -19,7 +19,7 @@ package:
 
 source:
   - url: https://github.com/anchore/grype/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: e64bd796bc93092ac9af1955193903d37f33ffbd4667a64a6b97c8f0dc61a2a7
+    sha256: 314a955453e4f69b3cee1a1982eed8e779ff8ae70e017d37a211d734b9083a94
     target_directory: ${{ go_mod }}
   - url: https://gitlab.com/cznic/mathutil/-/raw/b13e5b5643328f15fd2fcedc85f647f0d8f9180f/LICENSE  # v1.5.0
     sha256: bfa9bf72a72ca009fd62a8f84fca3dca67e51d93af96352723646599898b6cf5
